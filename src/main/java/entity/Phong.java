@@ -47,7 +47,7 @@ public class Phong implements Serializable {
 
 	
 
-	public Phong(String maPhong, int soNguoi, boolean tinhTrangPhong, LoaiPhong loaiPhong, Float dienTich, int soGiuong,
+	public Phong(String maPhong, int soNguoi, boolean tinhTrangPhong, LoaiPhong loaiPhong, float dienTich, int soGiuong,
 			int tang, String trangThaiPhong) {
 		super();
 		this.maPhong = maPhong;
@@ -97,7 +97,7 @@ public class Phong implements Serializable {
 		return dienTich;
 	}
 
-	public void setDienTich(Float dienTich) {
+	public void setDienTich(float dienTich) {
 		this.dienTich = dienTich;
 	}
 

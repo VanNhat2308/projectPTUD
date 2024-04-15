@@ -51,6 +51,8 @@ public class DialogSuaKhachHang extends JDialog implements ActionListener, ItemL
 	private JTextField textTenKH;
 	private JTextField textSDT;
 	private JTextField textMaKH;
+	private JTextField textEmail;
+	private JTextField textCMND;
 	private JButton btnHuy;
 	KhachHangService khachHangService = new KhachHangDao(MainFrame.sessionFactory);
 	DiaChiService chiService = new DiaChiDao(MainFrame.sessionFactory);
@@ -67,9 +69,7 @@ public class DialogSuaKhachHang extends JDialog implements ActionListener, ItemL
 	private JButton btnLamMoi;
 	private JButton btnCapNhat;
 	private KhachHang khachHang;
-	private JTextField textEmail;
-	private JLabel lblNewLabel_1;
-	private JTextField textCMND;
+
 
 	/**
 	 * Launch the application.
@@ -90,13 +90,7 @@ public class DialogSuaKhachHang extends JDialog implements ActionListener, ItemL
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public DialogSuaKhachHang(String ma) {
 		setResizable(false);
-//		System.out.println(ma);
-
 		khachHang = khachHangService.layKhachHangTheoMa(ma);
-//		System.out.println(khachHang);
-//
-//		System.out.println(khachHang.getMaKH().toString().trim());
-
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 		} catch (ClassNotFoundException e) {
@@ -165,6 +159,22 @@ public class DialogSuaKhachHang extends JDialog implements ActionListener, ItemL
 		lblNewLabel_2_4.setBounds(361, 96, 110, 35);
 		contentPanel.add(lblNewLabel_2_4);
 		
+		
+		JLabel lblNewLabel = new JLabel("Emaill:");
+		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 16));
+		lblNewLabel.setBounds(30, 344, 74, 35);
+		contentPanel.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("CMND");
+		lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 16));
+		lblNewLabel_1.setBounds(539, 346, 91, 35);
+		contentPanel.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_2_4_1 = new JLabel("Ngày sinh:");
+		lblNewLabel_2_4_1.setFont(new Font("Arial", Font.BOLD, 16));
+		lblNewLabel_2_4_1.setBounds(520, 215, 110, 35);
+		contentPanel.add(lblNewLabel_2_4_1);
+		
 
 		cbGioiTinh = new JComboBox<String>();
 		cbGioiTinh.setBackground(new Color(255, 255, 204));
@@ -194,7 +204,6 @@ public class DialogSuaKhachHang extends JDialog implements ActionListener, ItemL
 		btnHuy.setIcon(new ImageIcon(DialogSuaKhachHang.class.getResource("/icon/cancel (2).png")));
 		btnHuy.setFont(new Font("Arial", Font.BOLD, 16));
 		btnHuy.setBounds(28, 412, 131, 40);
-
 		contentPanel.add(btnHuy);
 
 		btnCapNhat = new JButton("Cập nhật");
@@ -213,11 +222,23 @@ public class DialogSuaKhachHang extends JDialog implements ActionListener, ItemL
 		textMaKH.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		textMaKH.setBounds(170, 97, 139, 35);
 		contentPanel.add(textMaKH);
+		
+		textCMND = new JTextField();
+		textCMND.setHorizontalAlignment(SwingConstants.LEFT);
+		textCMND.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		textCMND.setColumns(10);
+		textCMND.setBounds(618, 346, 189, 37);
+		contentPanel.add(textCMND);
 
-		JLabel lblNewLabel_2_4_1 = new JLabel("Ngày sinh:");
-		lblNewLabel_2_4_1.setFont(new Font("Arial", Font.BOLD, 16));
-		lblNewLabel_2_4_1.setBounds(520, 215, 110, 35);
-		contentPanel.add(lblNewLabel_2_4_1);
+		textEmail = new JTextField();
+		textEmail.setHorizontalAlignment(SwingConstants.LEFT);
+		textEmail.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		textEmail.setColumns(10);
+		textEmail.setBounds(170, 346, 321, 35);
+		contentPanel.add(textEmail);
+		
+		
+
 
 		ngaySinh = new JDateChooser();
 		ngaySinh.setBounds(616, 212, 189, 35);
@@ -260,32 +281,13 @@ public class DialogSuaKhachHang extends JDialog implements ActionListener, ItemL
 		cbTinhTP.addItemListener(this);
 		cbQuanHuyen.addItemListener(this);
 		cbPhuongXa.addItemListener(this);
-
 		btnCapNhat.addActionListener(this);
 		btnHuy.addActionListener(this);
 		textMaKH.setText(khachHang.getMaKH().toString().trim());
-		
-		JLabel lblNewLabel = new JLabel("Emaill:");
-		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 16));
-		lblNewLabel.setBounds(30, 344, 74, 35);
-		contentPanel.add(lblNewLabel);
-		
-		textEmail = new JTextField();
-		textEmail.setBounds(170, 346, 321, 35);
-		contentPanel.add(textEmail);
-		textEmail.setColumns(10);
-		
-		lblNewLabel_1 = new JLabel("CMND");
-		lblNewLabel_1.setFont(new Font("Arial", Font.BOLD, 16));
-		lblNewLabel_1.setBounds(539, 346, 91, 35);
-		contentPanel.add(lblNewLabel_1);
-		
-		textCMND = new JTextField();
-		textCMND.setBounds(618, 346, 189, 37);
-		contentPanel.add(textCMND);
-		textCMND.setColumns(10);
 		textTenKH.addActionListener(this);
 		textSDT.addActionListener(this);
+		textEmail.addActionListener(this);
+		textCMND.addActionListener(this);
 		loadDuLieu(khachHang);
 
 	}
@@ -298,6 +300,8 @@ public class DialogSuaKhachHang extends JDialog implements ActionListener, ItemL
 		cbQuanHuyen.setSelectedItem(khachHang.getDiaChi().getQuanHuyen());
 		cbPhuongXa.setSelectedItem(khachHang.getDiaChi().getPhuongXa());
 		ngaySinh.setDate(khachHang.getNgaySinh());
+		textEmail.setText(khachHang.getEmail());
+		textCMND.setText(khachHang.getSoCMND());
 	}
 
 	public boolean themKH() {
@@ -307,6 +311,7 @@ public class DialogSuaKhachHang extends JDialog implements ActionListener, ItemL
 		String tinhTP = cbTinhTP.getSelectedItem().toString();
 		String quanHuyen = cbQuanHuyen.getSelectedItem().toString();
 		String phuongXa = cbPhuongXa.getSelectedItem().toString();
+
 
 		if (tenKH.trim().equals("")) {
 			JOptionPane.showMessageDialog(this, "Tên không được trống");
@@ -329,7 +334,7 @@ public class DialogSuaKhachHang extends JDialog implements ActionListener, ItemL
 			return false;
 		}
 		if (!sdt.matches("^0[1-9][0-9]{8}")) {
-			JOptionPane.showMessageDialog(this, "Số điện thoại là dãy s!");
+			JOptionPane.showMessageDialog(this, "Số điện thoại là dãy số gồm 10 chữ số!");
 			textSDT.selectAll();
 			textSDT.requestFocus();
 
@@ -359,14 +364,41 @@ public class DialogSuaKhachHang extends JDialog implements ActionListener, ItemL
 			JOptionPane.showMessageDialog(this, "Vui lòng chọn phường xã");
 			return false;
 		}
+		String email = textEmail.getText();
+		if (email.isEmpty()) {
+		    JOptionPane.showMessageDialog(null, "Vui lòng nhập email");
+		    textEmail.selectAll();
+		    textEmail.requestFocus();
+		    return false;
+		}
+
+		if (!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+		    JOptionPane.showMessageDialog(this, "Email không hợp lệ");
+		    textEmail.selectAll();
+		    textEmail.requestFocus();
+		    return false;
+		}
+		String CMND =textCMND.getText();
+		if (CMND.isEmpty()) {
+		    JOptionPane.showMessageDialog(null, "Vui lòng nhập CMND");
+		    textCMND.selectAll();
+		    textCMND.requestFocus();
+		    return false;
+		}
+		if (!CMND.matches("\\d{9}")) {
+			JOptionPane.showMessageDialog(null, "CMND phải gồm 9 chữ số.");
+			textCMND.selectAll();
+			textCMND.requestFocus();
+			return false;
+		}
+		
 		Date ngay = ngaySinh.getDate();
 		KhachHang h2;
 		h2 = khachHangService.layKhachHangTheoMa(textMaKH.getText().toString().trim());
 		
 		KhachHang kh = new KhachHang(h2.getMaKH().toString().trim(), chiService.layDiaChi(phuongXa, quanHuyen, tinhTP),
-				tenKH, sdt, ngay, isgioiTinh(), textEmail.getText(), textCMND.getText());
+				tenKH, sdt, ngay, isgioiTinh(), email, CMND);
 		boolean k = khachHangService.suaKhachHang(kh);
-//		System.out.println(kh);
 		return k;
 	}
 

@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Insets;
@@ -49,9 +48,10 @@ import dao.MySessionFactory;
 import entity.KhachHang;
 import service.DiaChiService;
 import service.KhachHangService;
-//import app.KhachHangPanel;
-//import app.KhachHangPanel;
+
 import view.util.HeaderRenderer;
+import javax.swing.event.AncestorListener;
+import javax.swing.event.AncestorEvent;
 
 public class KhachHangPanel extends JPanel implements ActionListener, KeyListener, MouseListener, ItemListener {
 
@@ -70,7 +70,6 @@ public class KhachHangPanel extends JPanel implements ActionListener, KeyListene
 	private JTable table;
 	@SuppressWarnings("unused")
 	private JTextField txtChietKhau;
-	private JLabel lblCm;
 	@SuppressWarnings("unused")
 	private JTextField txtMaGiamGia;
 	private JLabel lblNewLabel_1;
@@ -80,18 +79,15 @@ public class KhachHangPanel extends JPanel implements ActionListener, KeyListene
 	private JComboBox cbHoatDong;
 	@SuppressWarnings("unused")
 	private JButton btnTrV;
-	private Component lblNewLabel;
-	private JLabel lblTn;
 	private JTextField textTen;
 	private JTextField textSDT;
-	private Component lblNhpSdt;
 	private AbstractButton btnTim;
 	private JTextField textMa;
 	private int limit = 20;
 	@SuppressWarnings("rawtypes")
 	private JComboBox cbioiTinh;
 	SessionFactory sessionFactory = new MySessionFactory().getSessionFactory();
-	KhachHangService khachHangdao = new KhachHangDao(sessionFactory);
+	KhachHangService khachHangService = new KhachHangDao(sessionFactory);
 	DiaChiService diaChiDao = new DiaChiDao(sessionFactory);
 	@SuppressWarnings("unused")
 	private ArrayList<KhachHang> litsKhachHangs;
@@ -102,7 +98,7 @@ public class KhachHangPanel extends JPanel implements ActionListener, KeyListene
 	private JButton btnCong1;
 	private JButton btnCuoi;
 	private JLabel txtTongTrang;
-
+	
 	/**
 	 * Create the frame.
 	 */
@@ -173,15 +169,41 @@ public class KhachHangPanel extends JPanel implements ActionListener, KeyListene
 		btnLamMoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnLamMoi.setBackground(new Color(107, 142, 35));
 
-		lblNewLabel = new JLabel("Mã KH: ");
+		JLabel lblNewLabel = new JLabel("Mã KH: ");
 		lblNewLabel.setForeground(Color.BLACK);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
 
-		lblTn = new JLabel("Tên: ");
+		JLabel lblTn = new JLabel("Tên: ");
 		lblTn.setForeground(Color.BLACK);
 		lblTn.setFont(new Font("Tahoma", Font.BOLD, 16));
 
+		JLabel lblCm = new JLabel("SDT: ");
+		lblCm.setForeground(Color.BLACK);
+		lblCm.setFont(new Font("Tahoma", Font.BOLD, 16));
+
+		JLabel lblNhpSdt = new JLabel("Giới tính: ");
+		lblNhpSdt.setForeground(Color.BLACK);
+		lblNhpSdt.setFont(new Font("Tahoma", Font.BOLD, 16));
+
+		textMa = new JTextField();
+		textMa.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		textMa.setColumns(10);
+
 		textTen = new JTextField();
+		textTen.addAncestorListener(new AncestorListener() {
+			public void ancestorAdded(AncestorEvent event) {
+			}
+
+			public void ancestorMoved(AncestorEvent event) {
+			}
+
+			public void ancestorRemoved(AncestorEvent event) {
+			}
+		});
+		textTen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		textTen.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		textTen.setColumns(10);
 
@@ -189,24 +211,12 @@ public class KhachHangPanel extends JPanel implements ActionListener, KeyListene
 		textSDT.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		textSDT.setColumns(10);
 
-		lblCm = new JLabel("SDT: ");
-		lblCm.setForeground(Color.BLACK);
-		lblCm.setFont(new Font("Tahoma", Font.BOLD, 16));
-
-		lblNhpSdt = new JLabel("Giới tính: ");
-		lblNhpSdt.setForeground(Color.BLACK);
-		lblNhpSdt.setFont(new Font("Tahoma", Font.BOLD, 16));
-
 		btnTim = new JButton("Tìm");
 		btnTim.setIcon(new ImageIcon(KhachHangPanel.class.getResource("/icon/search.png")));
 		btnTim.setIconTextGap(20);
 		btnTim.setForeground(Color.WHITE);
 		btnTim.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnTim.setBackground(new Color(60, 179, 113));
-
-		textMa = new JTextField();
-		textMa.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		textMa.setColumns(10);
 
 		lblNewLabel_1 = new JLabel("Danh Sách Khách Hàng");
 		lblNewLabel_1.setOpaque(true);
@@ -222,7 +232,7 @@ public class KhachHangPanel extends JPanel implements ActionListener, KeyListene
 
 		tableModle = new DefaultTableModel(new Object[][] {
 
-		}, new String[] { "Mã KH ", "Họ tên", "SĐT", "Ngày sinh", "Giới tính", "Địa chỉ" });
+		}, new String[] { "Mã KH ", "Họ tên", "SĐT", "Ngày sinh", "Giới tính", "Địa chỉ", "Email", "CMND" });
 
 		table.setRowHeight(50);
 		scrollPane.setViewportView(table);
@@ -231,11 +241,13 @@ public class KhachHangPanel extends JPanel implements ActionListener, KeyListene
 
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.getColumnModel().getColumn(0).setPreferredWidth(50);
-		table.getColumnModel().getColumn(1).setPreferredWidth(160);
-		table.getColumnModel().getColumn(2).setPreferredWidth(100);
-		table.getColumnModel().getColumn(3).setPreferredWidth(100);
+		table.getColumnModel().getColumn(1).setPreferredWidth(140);
+		table.getColumnModel().getColumn(2).setPreferredWidth(80);
+		table.getColumnModel().getColumn(3).setPreferredWidth(80);
 		table.getColumnModel().getColumn(4).setPreferredWidth(50);
 		table.getColumnModel().getColumn(5).setPreferredWidth(250);
+		table.getColumnModel().getColumn(6).setPreferredWidth(150);
+		table.getColumnModel().getColumn(7).setPreferredWidth(80);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
 
 		JTableHeader h = table.getTableHeader();
@@ -246,7 +258,7 @@ public class KhachHangPanel extends JPanel implements ActionListener, KeyListene
 		// center
 		JLabel headerLabel = (JLabel) renderer;
 		headerLabel.setHorizontalAlignment(JLabel.CENTER);
-		// set color Header Table
+//		 set color Header Table
 		@SuppressWarnings("unused")
 		TableColumnModel columnmodel;
 		columnmodel = table.getColumnModel();
@@ -378,8 +390,8 @@ public class KhachHangPanel extends JPanel implements ActionListener, KeyListene
 						.addPreferredGap(ComponentPlacement.RELATED)
 						.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE).addGap(13)));
 		contentPane_1.setLayout(gl_contentPane_1);
-		cbioiTinh.addItemListener(this);
 
+		cbioiTinh.addItemListener(this);
 		btnCong1.addActionListener(this);
 		btnTru1.addActionListener(this);
 		btnDau.addActionListener(this);
@@ -466,21 +478,24 @@ public class KhachHangPanel extends JPanel implements ActionListener, KeyListene
 		}
 		System.out.println(gioiTinh);
 		List<KhachHang> dsKH = null;
-		dsKH = khachHangdao.layDanhSachKhachHang(page - 1, textTen.getText().trim(), gioiTinh, limit);
+		dsKH = khachHangService.layDanhSachKhachHang(page - 1, textTen.getText().trim(), gioiTinh, limit);
 
 		if (dsKH == null) {
 			JOptionPane.showMessageDialog(this, "rong");
 			txtPage.setText("1");
 			return;
 		}
-//		khachHang = khachHangdao.layDanhSachKhacHang();
+		
+		khachHang = khachHangService.layDanhSachKhacHang();
 		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		xoaALLDuLieuTable();
 		for (KhachHang khachHang2 : dsKH) {
-			tableModle.addRow(new Object[] { khachHang2.getMaKH(), khachHang2.getHoTen(), khachHang2.getSoDienThoai(),
-					df.format(khachHang2.getNgaySinh()), khachHang2.isGioiTinh() ? "Nam" : "Nữ",
-					khachHang2.getDiaChi().getPhuongXa() + "-" + khachHang2.getDiaChi().getQuanHuyen() + "-"
-							+ khachHang2.getDiaChi().getTinhTP() });
+			tableModle
+					.addRow(new Object[] { khachHang2.getMaKH(), khachHang2.getHoTen(), khachHang2.getSoDienThoai(),
+							df.format(khachHang2.getNgaySinh()), khachHang2.isGioiTinh() ? "Nam" : "Nữ",
+							khachHang2.getDiaChi().getPhuongXa() + "-" + khachHang2.getDiaChi().getQuanHuyen() + "-"
+									+ khachHang2.getDiaChi().getTinhTP(),
+							khachHang2.getEmail(), khachHang2.getSoCMND() });
 		}
 
 	}
@@ -496,7 +511,7 @@ public class KhachHangPanel extends JPanel implements ActionListener, KeyListene
 			gioiTinh = cbioiTinh.getSelectedItem().toString().equalsIgnoreCase("Nam") ? "1" : "0";
 		}
 		try {
-			tongPage = khachHangdao.tongTrang(textTen.getText().trim(), gioiTinh, limit);
+			tongPage = khachHangService.tongTrang(textTen.getText().trim(), gioiTinh, limit);
 		} catch (Exception e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
@@ -506,7 +521,6 @@ public class KhachHangPanel extends JPanel implements ActionListener, KeyListene
 			// next table
 			int page = Integer.parseInt(txtPage.getText()) + 1;
 			System.err.println("Page" + page);
-//			System.err.println(page);
 			if (page <= tongPage) {
 				txtTongTrang.setText(Integer.toString(tongPage));
 				txtPage.setText(Integer.toString(page));
@@ -569,14 +583,15 @@ public class KhachHangPanel extends JPanel implements ActionListener, KeyListene
 			KhachHang kh = null;
 			if (!maNV.trim().equals("")) {
 
-				kh = khachHangdao.layKhachHangTheoMa(maNV);
+				kh = khachHangService.layKhachHangTheoMa(maNV);
 				if (kh != null) {
 					xoaALLDuLieuTable();
 					textSDT.setText("");
 					textSDT.setEnabled(false);
 					tableModle.addRow(new Object[] { kh.getMaKH(), kh.getHoTen(), kh.getSoDienThoai(),
 							df.format(kh.getNgaySinh()), getGioiTinh(kh.isGioiTinh()), kh.getDiaChi().getPhuongXa()
-									+ "-" + kh.getDiaChi().getQuanHuyen() + "-" + kh.getDiaChi().getTinhTP() });
+									+ "-" + kh.getDiaChi().getQuanHuyen() + "-" + kh.getDiaChi().getTinhTP(),
+							kh.getEmail(), kh.getSoCMND() });
 				} else {
 					JOptionPane.showMessageDialog(this, "Không tìm thấy!!");
 					return;
@@ -585,14 +600,15 @@ public class KhachHangPanel extends JPanel implements ActionListener, KeyListene
 			}
 			if (!sdt.trim().equals("")) {
 
-				kh = khachHangdao.layKhachHangTheoSDT(sdt);
+				kh = khachHangService.layKhachHangTheoSDT(sdt);
 				if (kh != null) {
 					xoaALLDuLieuTable();
 					textMa.setText("");
 					textMa.setEnabled(false);
 					tableModle.addRow(new Object[] { kh.getMaKH(), kh.getHoTen(), kh.getSoDienThoai(),
 							df.format(kh.getNgaySinh()), getGioiTinh(kh.isGioiTinh()), kh.getDiaChi().getPhuongXa()
-									+ "-" + kh.getDiaChi().getQuanHuyen() + "-" + kh.getDiaChi().getTinhTP() });
+									+ "-" + kh.getDiaChi().getQuanHuyen() + "-" + kh.getDiaChi().getTinhTP(),
+							kh.getEmail(), kh.getSoCMND() });
 				} else {
 					JOptionPane.showMessageDialog(this, "Không tìm thấy!!");
 					return;
@@ -606,34 +622,34 @@ public class KhachHangPanel extends JPanel implements ActionListener, KeyListene
 			xoaALLDuLieuTable();
 			docDuLieuVaoBang();
 		}
-//		if (object.equals(cbioiTinh)) {
-//
-//			if (cbioiTinh.getSelectedItem().toString().trim() == "Nữ") {
-//				khachHang = khachHangdao.layDanhSachKhachHangTheoGioiTinh(false);
-//
-//				for (KhachHang khachHang2 : khachHang) {
-//					tableModle.addRow(
-//							new Object[] { khachHang2.getMaKH(), khachHang2.getHoTen(), khachHang2.getSoDienThoai(),
-//									df.format(khachHang2.getNgaySinh()), khachHang2.isGioiTinh() ? "Nam" : "Nữ",
-//									khachHang2.getDiaChi().getPhuongXa() + "-" + khachHang2.getDiaChi().getQuanHuyen()
-//											+ "-" + khachHang2.getDiaChi().getTinhTP() });
-//				}
-//			}
-//
-//			if (cbioiTinh.getSelectedItem().toString().trim() == "Nam") {
-//
-//				khachHang = khachHangdao.layDanhSachKhachHangTheoGioiTinh(true);
-//				for (KhachHang khachHang2 : khachHang) {
-//					tableModle.addRow(
-//							new Object[] { khachHang2.getMaKH(), khachHang2.getHoTen(), khachHang2.getSoDienThoai(),
-//									df.format(khachHang2.getNgaySinh()), khachHang2.isGioiTinh() ? "Nam" : "Nữ",
-//									khachHang2.getDiaChi().getPhuongXa() + "-" + khachHang2.getDiaChi().getQuanHuyen()
-//											+ "-" + khachHang2.getDiaChi().getTinhTP() });
-//					System.out.println(khachHang);
-//				}
-//
-//			}
-//		}
+		if (object.equals(cbioiTinh)) {
+
+			if (cbioiTinh.getSelectedItem().toString().trim() == "Nữ") {
+				khachHang = khachHangService.layDanhSachKhachHangTheoGioiTinh(false);
+
+				for (KhachHang khachHang2 : khachHang) {
+					tableModle.addRow(
+							new Object[] { khachHang2.getMaKH(), khachHang2.getHoTen(), khachHang2.getSoDienThoai(),
+									df.format(khachHang2.getNgaySinh()), khachHang2.isGioiTinh() ? "Nam" : "Nữ",
+									khachHang2.getDiaChi().getPhuongXa() + "-" + khachHang2.getDiaChi().getQuanHuyen()
+											+ "-" + khachHang2.getDiaChi().getTinhTP(),khachHang2.getEmail(),khachHang2.getSoCMND() });
+				}
+			}
+
+			if (cbioiTinh.getSelectedItem().toString().trim() == "Nam") {
+
+				khachHang = khachHangService.layDanhSachKhachHangTheoGioiTinh(true);
+				for (KhachHang khachHang2 : khachHang) {
+					tableModle.addRow(
+							new Object[] { khachHang2.getMaKH(), khachHang2.getHoTen(), khachHang2.getSoDienThoai(),
+									df.format(khachHang2.getNgaySinh()), khachHang2.isGioiTinh() ? "Nam" : "Nữ",
+									khachHang2.getDiaChi().getPhuongXa() + "-" + khachHang2.getDiaChi().getQuanHuyen()
+											+ "-" + khachHang2.getDiaChi().getTinhTP(),khachHang2.getEmail(),khachHang2.getSoCMND() });
+					System.out.println(khachHang);
+				}
+
+			}
+		}
 	}
 
 	public boolean ktgioiTinh() {
@@ -673,8 +689,9 @@ public class KhachHangPanel extends JPanel implements ActionListener, KeyListene
 	}
 
 	public void keyTyped(KeyEvent e) {
-		txtPage.setText("1");
-		docDuLieuVaoBang();
+//		txtPage.setText("1");
+//		docDuLieuVaoBang();
+		// TODO Auto-generated method stub
 
 	}
 
@@ -684,26 +701,26 @@ public class KhachHangPanel extends JPanel implements ActionListener, KeyListene
 	}
 
 	public void keyReleased(KeyEvent e) {
+		@SuppressWarnings("unused")
 		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		Object object = e.getSource();
 		if (object.equals(textTen)) {
-			String ten = textTen.getText().toString();
+			String ten = textTen.getText().trim();
 			if (ten.equalsIgnoreCase("")) {
 				xoaALLDuLieuTable();
 				docDuLieuVaoBang();
 			} else {
-
+				List<KhachHang> list = null;
 				xoaALLDuLieuTable();
-				table.clearSelection();
-				cbioiTinh.setSelectedIndex(0);
-				khachHang = khachHangdao.layDanhSachKhachHangTheoTen(textTen.getText());
-				for (KhachHang khachHang2 : khachHang) {
-
-					tableModle.addRow(
-							new Object[] { khachHang2.getMaKH(), khachHang2.getHoTen(), khachHang2.getSoDienThoai(),
-									df.format(khachHang2.getNgaySinh()), getGioiTinh(khachHang2.isGioiTinh()),
-									khachHang2.getDiaChi().getPhuongXa() + "-" + khachHang2.getDiaChi().getQuanHuyen()
-											+ "-" + khachHang2.getDiaChi().getTinhTP() });
+				list = khachHangService.layDanhSachKhachHangTheoTen(ten);
+				for (KhachHang khachHang2 : list) {
+					String[] s = { khachHang2.getMaKH(), khachHang2.getHoTen().toUpperCase(),
+							khachHang2.getSoDienThoai(), df.format(khachHang2.getNgaySinh()),
+							getGioiTinh(khachHang2.isGioiTinh()),
+							khachHang2.getDiaChi().getPhuongXa() + "-" + khachHang2.getDiaChi().getQuanHuyen() + "-"
+									+ khachHang2.getDiaChi().getTinhTP(),
+							khachHang2.getEmail(), khachHang2.getSoCMND() };
+					tableModle.addRow(s);
 
 				}
 			}

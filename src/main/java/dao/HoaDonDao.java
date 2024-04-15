@@ -146,15 +146,16 @@ public class HoaDonDao {
 	public boolean themHoaDon(HoaDon hoaDon) {
 
 		hoaDon.setMaHD(phatSinhMaTuDong());
+		System.out.println(hoaDon.getMaHD());
 		if (hoaDon.getKhachHang() == null) {
 			// default customer
 			hoaDon.setKhachHang(new KhachHang("KHAA001"));
 		}
 
-//		if (hoaDon.getKhuyenMai() == null) {
-//			// default Voucher
-//			hoaDon.setKhuyenMai(new KhuyenMai("KMAA001"));
-//		}
+		if (hoaDon.getKhuyenMai() == null) {
+			// default Voucher
+			hoaDon.setKhuyenMai(new KhuyenMai("KMAA001"));
+		}
 		Session session = sessionFactory.getCurrentSession();
 		Transaction tr = session.getTransaction();
 

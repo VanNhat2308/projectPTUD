@@ -21,7 +21,7 @@ public interface NhanVienService {
 	public NhanVien layThongTinNhanVienQuaCMND(String cmnd) throws RemoteException;
 
 	public List<NhanVien> layDanhSachNhanVienTheoTen(String ten);
-
+	
 
 	public boolean suaTrangThaiLamViecQuaSoDienThoai(String soDienThoai, boolean trangThaiLamViec)
 			throws RemoteException;

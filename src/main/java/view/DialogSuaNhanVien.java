@@ -64,11 +64,11 @@ public class DialogSuaNhanVien extends JDialog implements ActionListener, ItemLi
 	private JComboBox<String> cbPhuongXa;
 	private JButton btnCapNhat;
 	private JComboBox<String> cbGioiTinh;
+	private JComboBox<String> cbtrangThai;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textHoTen;
 	private JButton btnHuy;
 	private JTextField textMa;
-	private JLabel lblQuanHuyen;
 	NhanVienService nhanVienService = new NhanVienDao(MainFrame.sessionFactory);
 	private NhanVien nhanVien;
 	DiaChiService chiService = new DiaChiDao(MainFrame.sessionFactory);
@@ -78,6 +78,7 @@ public class DialogSuaNhanVien extends JDialog implements ActionListener, ItemLi
 	private List<String> listPhuongXa = new ArrayList<String>();
 	private JDateChooser ngaySinh;
 	private JButton btnKhoiPhuc;
+
 
 	/**
 	 * Launch the application.
@@ -122,97 +123,96 @@ public class DialogSuaNhanVien extends JDialog implements ActionListener, ItemLi
 		setLocationRelativeTo(null);
 
 		contentPanel.setLayout(null);
-		{
-			JLabel lblNewLabel_2 = new JLabel("Họ tên:");
-			lblNewLabel_2.setBounds(419, 99, 88, 35);
-			lblNewLabel_2.setFont(new Font("Arial", Font.BOLD, 16));
-			contentPanel.add(lblNewLabel_2);
-		}
-		{
-			JLabel lblGioiTinh = new JLabel("Giới tính:");
-			lblGioiTinh.setBounds(28, 148, 81, 35);
-			lblGioiTinh.setFont(new Font("Arial", Font.BOLD, 16));
-			contentPanel.add(lblGioiTinh);
-		}
-		{
-			JLabel lblNewLabel_2 = new JLabel("CMND:");
-			lblNewLabel_2.setBounds(28, 197, 90, 35);
-			lblNewLabel_2.setFont(new Font("Arial", Font.BOLD, 16));
-			contentPanel.add(lblNewLabel_2);
-		}
-		{
-			cbGioiTinh = new JComboBox();
-			cbGioiTinh.setBackground(new Color(255, 255, 204));
-			cbGioiTinh.setBounds(125, 148, 240, 35);
-			cbGioiTinh.setFont(new Font("Arial", Font.PLAIN, 16));
-			cbGioiTinh.setModel(new DefaultComboBoxModel(new String[] { "Giới tính", "Nam", "Nữ" }));
-			contentPanel.add(cbGioiTinh);
 
-		}
-		{
-			JLabel lblNewLabel_2 = new JLabel("Ngày sinh:");
-			lblNewLabel_2.setBounds(28, 247, 115, 35);
-			lblNewLabel_2.setFont(new Font("Arial", Font.BOLD, 16));
-			contentPanel.add(lblNewLabel_2);
-		}
-		{
-			JLabel lblTinhTP = new JLabel("Tỉnh/TP:");
-			lblTinhTP.setBounds(28, 302, 74, 35);
-			lblTinhTP.setFont(new Font("Arial", Font.BOLD, 16));
-			contentPanel.add(lblTinhTP);
-		}
-		{
-			JLabel lblSDT = new JLabel("SDT:");
-			lblSDT.setBounds(419, 148, 76, 35);
-			lblSDT.setFont(new Font("Arial", Font.BOLD, 16));
-			contentPanel.add(lblSDT);
-		}
-		{
-			btnHuy = new JButton("Hủy");
-			btnHuy.setIconTextGap(20);
-			btnHuy.setIcon(new ImageIcon(DialogSuaNhanVien.class.getResource("/icon/cancel (2).png")));
-			btnHuy.addActionListener(this);
-			btnHuy.setForeground(new Color(255, 255, 255));
-			btnHuy.setBackground(new Color(250, 128, 114));
-			btnHuy.setFont(new Font("Arial", Font.BOLD, 16));
-			btnHuy.setBounds(24, 367, 131, 40);
-			
-			contentPanel.add(btnHuy);
-		}
-		{
-			btnCapNhat = new JButton("Cập nhật");
-			btnCapNhat.setAlignmentX(Component.RIGHT_ALIGNMENT);
-			btnCapNhat.setMargin(new Insets(2, 0, 2, 0));
-			btnCapNhat.setIconTextGap(10);
-			btnCapNhat.setIcon(new ImageIcon(DialogSuaNhanVien.class.getResource("/icon/update (2).png")));
-			btnCapNhat.setForeground(new Color(255, 255, 255));
-			btnCapNhat.setBackground(new Color(60, 179, 113));
-			btnCapNhat.setBounds(677, 367, 131, 40);
+		JLabel lblNewLabel = new JLabel("Sửa thông tin nhân viên");
+		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setOpaque(true);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblNewLabel.setBackground(new Color(72, 209, 204));
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 35));
+		lblNewLabel.setBounds(0, 0, 836, 70);
+		contentPanel.add(lblNewLabel);
 
-			btnCapNhat.setFont(new Font("Arial", Font.BOLD, 16));
+		JLabel lblhoTen = new JLabel("Họ tên:");
+		lblhoTen.setBounds(419, 99, 88, 35);
+		lblhoTen.setFont(new Font("Arial", Font.BOLD, 16));
+		contentPanel.add(lblhoTen);
 
-			contentPanel.add(btnCapNhat);
-		}
-		{
-			JLabel lblMatKau = new JLabel("Mật khẩu:");
-			lblMatKau.setBounds(419, 207, 76, 35);
-			lblMatKau.setFont(new Font("Arial", Font.BOLD, 16));
-			contentPanel.add(lblMatKau);
-		}
-		{
-			txtMatKhau = new JPasswordField();
-			txtMatKhau.setBounds(561, 207, 240, 35);
-			txtMatKhau.setFont(new Font("Tahoma", Font.PLAIN, 16));
-			contentPanel.add(txtMatKhau);
-			txtMatKhau.setColumns(10);
-		}
-		{
-			txtSDT = new JTextField();
-			txtSDT.setFont(new Font("Tahoma", Font.PLAIN, 16));
-			txtSDT.setBounds(561, 148, 240, 35);
-			contentPanel.add(txtSDT);
-			txtSDT.setColumns(10);
-		}
+		JLabel lblmaNV = new JLabel("Mã NV:");
+		lblmaNV.setFont(new Font("Arial", Font.BOLD, 16));
+		lblmaNV.setBounds(28, 97, 115, 35);
+		contentPanel.add(lblmaNV);
+
+		JLabel lblGioiTinh = new JLabel("Giới tính:");
+		lblGioiTinh.setBounds(28, 148, 81, 35);
+		lblGioiTinh.setFont(new Font("Arial", Font.BOLD, 16));
+		contentPanel.add(lblGioiTinh);
+
+		JLabel lblCMND = new JLabel("CMND:");
+		lblCMND.setBounds(28, 197, 90, 35);
+		lblCMND.setFont(new Font("Arial", Font.BOLD, 16));
+		contentPanel.add(lblCMND);
+
+		JLabel lblngaySinh = new JLabel("Ngày sinh:");
+		lblngaySinh.setBounds(28, 247, 115, 35);
+		lblngaySinh.setFont(new Font("Arial", Font.BOLD, 16));
+		contentPanel.add(lblngaySinh);
+
+		JLabel lblMatKau = new JLabel("Mật khẩu:");
+		lblMatKau.setBounds(419, 197, 76, 35);
+		lblMatKau.setFont(new Font("Arial", Font.BOLD, 16));
+		contentPanel.add(lblMatKau);
+
+		JLabel lblTinhTP = new JLabel("Tỉnh/TP:");
+		lblTinhTP.setBounds(28, 302, 74, 35);
+		lblTinhTP.setFont(new Font("Arial", Font.BOLD, 16));
+		contentPanel.add(lblTinhTP);
+
+		JLabel lblQuanHuyen = new JLabel("Quận/Huyện:");
+		lblQuanHuyen.setFont(new Font("Arial", Font.BOLD, 16));
+		lblQuanHuyen.setBounds(282, 302, 107, 37);
+		contentPanel.add(lblQuanHuyen);
+
+		JLabel lblPhuongXa = new JLabel("Phường/Xã:");
+		lblPhuongXa.setFont(new Font("Arial", Font.BOLD, 16));
+		lblPhuongXa.setBounds(561, 302, 101, 35);
+		contentPanel.add(lblPhuongXa);
+
+		JLabel lblSDT = new JLabel("SDT:");
+		lblSDT.setBounds(419, 148, 76, 35);
+		lblSDT.setFont(new Font("Arial", Font.BOLD, 16));
+		contentPanel.add(lblSDT);
+
+		JLabel lbltrangThai = new JLabel("Trạng Thái");
+		lbltrangThai.setFont(new Font("Arial", Font.BOLD, 16));
+		lbltrangThai.setBounds(419, 247, 110, 35);
+		contentPanel.add(lbltrangThai);
+
+		txtMatKhau = new JPasswordField();
+		txtMatKhau.setBounds(561, 197, 240, 35);
+		txtMatKhau.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		contentPanel.add(txtMatKhau);
+		txtMatKhau.setColumns(10);
+
+		txtCMND = new JTextField();
+		txtCMND.setBounds(124, 197, 240, 35);
+		txtCMND.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		contentPanel.add(txtCMND);
+		txtCMND.setColumns(10);
+
+		cbGioiTinh = new JComboBox();
+		cbGioiTinh.setBackground(new Color(255, 255, 204));
+		cbGioiTinh.setBounds(125, 148, 240, 35);
+		cbGioiTinh.setFont(new Font("Arial", Font.PLAIN, 16));
+		cbGioiTinh.setModel(new DefaultComboBoxModel(new String[] { "Giới tính", "Nam", "Nữ" }));
+		contentPanel.add(cbGioiTinh);
+
+		txtSDT = new JTextField();
+		txtSDT.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtSDT.setBounds(561, 148, 240, 35);
+		contentPanel.add(txtSDT);
+		txtSDT.setColumns(10);
 
 		cbTinhTP = new JComboBox<String>();
 		cbTinhTP.setBackground(new Color(255, 255, 204));
@@ -229,15 +229,6 @@ public class DialogSuaNhanVien extends JDialog implements ActionListener, ItemLi
 			cbTinhTP.addItem(dc);
 		}
 
-		cbPhuongXa = new JComboBox();
-		cbPhuongXa.setBackground(new Color(255, 255, 204));
-		cbPhuongXa.setBounds(669, 302, 135, 35);
-		modelPhuongXa = new DefaultComboBoxModel(new String[] { "Phường/Xã" });
-		cbPhuongXa.setModel(modelPhuongXa);
-		cbPhuongXa.setFont(new Font("Arial", Font.PLAIN, 16));
-		cbPhuongXa.addActionListener(this);
-		contentPanel.add(cbPhuongXa);
-
 		cbQuanHuyen = new JComboBox<String>();
 		cbQuanHuyen.setBackground(new Color(255, 255, 204));
 		cbQuanHuyen.setBounds(394, 302, 135, 35);
@@ -247,53 +238,72 @@ public class DialogSuaNhanVien extends JDialog implements ActionListener, ItemLi
 		cbQuanHuyen.addActionListener(this);
 		contentPanel.add(cbQuanHuyen);
 
+		cbPhuongXa = new JComboBox();
+		cbPhuongXa.setBackground(new Color(255, 255, 204));
+		cbPhuongXa.setBounds(669, 302, 135, 35);
+		modelPhuongXa = new DefaultComboBoxModel(new String[] { "Phường/Xã" });
+		cbPhuongXa.setModel(modelPhuongXa);
+		cbPhuongXa.setFont(new Font("Arial", Font.PLAIN, 16));
+		cbPhuongXa.addActionListener(this);
+		contentPanel.add(cbPhuongXa);
+
 		textHoTen = new JTextField();
 		textHoTen.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		textHoTen.setBounds(565, 99, 240, 35);
 		contentPanel.add(textHoTen);
 		textHoTen.setColumns(10);
 
-		lblQuanHuyen = new JLabel("Quận/Huyện:");
-		lblQuanHuyen.setFont(new Font("Arial", Font.BOLD, 16));
-		lblQuanHuyen.setBounds(282, 302, 107, 37);
-		contentPanel.add(lblQuanHuyen);
+		textMa = new JTextField();
+		textMa.setEnabled(false);
+		textMa.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		textMa.setColumns(10);
+		textMa.setBounds(125, 99, 240, 35);
+		contentPanel.add(textMa);
 
-		JLabel lblPhuongXa = new JLabel("Phường/Xã:");
-		lblPhuongXa.setFont(new Font("Arial", Font.BOLD, 16));
-		lblPhuongXa.setBounds(561, 302, 101, 35);
-		contentPanel.add(lblPhuongXa);
-		{
-			txtCMND = new JTextField();
-			txtCMND.setBounds(124, 197, 240, 35);
-			txtCMND.setFont(new Font("Tahoma", Font.PLAIN, 16));
-			contentPanel.add(txtCMND);
-			txtCMND.setColumns(10);
-		}
+		ngaySinh = new JDateChooser();
+		ngaySinh.setBounds(125, 247, 240, 35);
+		ngaySinh.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		ngaySinh.setDateFormatString("dd/MM/yyyy");
+		contentPanel.add(ngaySinh);
 
-		JLabel lblNewLabel = new JLabel("Sửa thông tin nhân viên");
-		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setOpaque(true);
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblNewLabel.setBackground(new Color(72, 209, 204));
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 35));
-		lblNewLabel.setBounds(0, 0, 836, 70);
-		contentPanel.add(lblNewLabel);
-		{
-			JLabel lblNewLabel_2 = new JLabel("Mã NV:");
-			lblNewLabel_2.setFont(new Font("Arial", Font.BOLD, 16));
-			lblNewLabel_2.setBounds(28, 97, 115, 35);
-			contentPanel.add(lblNewLabel_2);
-		}
-		{
-			textMa = new JTextField();
-			textMa.setEnabled(false);
-			textMa.setFont(new Font("Tahoma", Font.PLAIN, 16));
-			textMa.setColumns(10);
-			textMa.setBounds(125, 99, 240, 35);
-			contentPanel.add(textMa);
-		}
-		
+		cbtrangThai = new JComboBox();
+		cbtrangThai.setFont(new Font("Arial", Font.PLAIN, 16));
+		cbtrangThai.setBackground(new Color(255, 255, 204));
+		cbtrangThai.setBounds(561, 246, 244, 35);
+		cbtrangThai.setModel(new DefaultComboBoxModel(new String[] { "Trạng thái", "Đang làm", "Nghĩ việc" }));
+		contentPanel.add(cbtrangThai);
+
+		btnHuy = new JButton("Hủy");
+		btnHuy.setIconTextGap(20);
+		btnHuy.setIcon(new ImageIcon(DialogSuaNhanVien.class.getResource("/icon/cancel (2).png")));
+		btnHuy.addActionListener(this);
+		btnHuy.setForeground(new Color(255, 255, 255));
+		btnHuy.setBackground(new Color(250, 128, 114));
+		btnHuy.setFont(new Font("Arial", Font.BOLD, 16));
+		btnHuy.setBounds(24, 367, 131, 40);
+		contentPanel.add(btnHuy);
+
+		btnCapNhat = new JButton("Cập nhật");
+		btnCapNhat.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		btnCapNhat.setMargin(new Insets(2, 0, 2, 0));
+		btnCapNhat.setIconTextGap(10);
+		btnCapNhat.setIcon(new ImageIcon(DialogSuaNhanVien.class.getResource("/icon/update (2).png")));
+		btnCapNhat.setForeground(new Color(255, 255, 255));
+		btnCapNhat.setBackground(new Color(60, 179, 113));
+		btnCapNhat.setBounds(677, 367, 131, 40);
+		btnCapNhat.setFont(new Font("Arial", Font.BOLD, 16));
+		contentPanel.add(btnCapNhat);
+
+		btnKhoiPhuc = new JButton("Khôi Phục");
+		btnKhoiPhuc.setMargin(new Insets(2, 0, 2, 0));
+		btnKhoiPhuc.setIcon(new ImageIcon(DialogSuaNhanVien.class.getResource("/icon/synchronize.png")));
+		btnKhoiPhuc.setIconTextGap(5);
+		btnKhoiPhuc.setForeground(Color.WHITE);
+		btnKhoiPhuc.setFont(new Font("Arial", Font.BOLD, 16));
+		btnKhoiPhuc.setBackground(Color.DARK_GRAY);
+		btnKhoiPhuc.setBounds(529, 367, 138, 40);
+		contentPanel.add(btnKhoiPhuc);
+
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBackground(SystemColor.window);
@@ -304,26 +314,10 @@ public class DialogSuaNhanVien extends JDialog implements ActionListener, ItemLi
 		txtCMND.addActionListener(this);
 		txtMatKhau.addActionListener(this);
 		txtSDT.addActionListener(this);
-		ngaySinh = new JDateChooser();
-		ngaySinh.setBounds(125, 247, 240, 35);
-		ngaySinh.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		ngaySinh.setDateFormatString("dd/MM/yyyy");
-		contentPanel.add(ngaySinh);
-
-		btnKhoiPhuc = new JButton("Khôi Phục");
-
-		btnKhoiPhuc.setMargin(new Insets(2, 0, 2, 0));
-		btnKhoiPhuc.setIcon(new ImageIcon(DialogSuaNhanVien.class.getResource("/icon/synchronize.png")));
-		btnKhoiPhuc.setIconTextGap(5);
-		btnKhoiPhuc.setForeground(Color.WHITE);
-		btnKhoiPhuc.setFont(new Font("Arial", Font.BOLD, 16));
-		btnKhoiPhuc.setBackground(Color.DARK_GRAY);
-		btnKhoiPhuc.setBounds(529, 367, 138, 40);
-		contentPanel.add(btnKhoiPhuc);
-
 		textMa.addActionListener(this);
 		txtMatKhau.addActionListener(this);
 		cbGioiTinh.addItemListener(this);
+		cbtrangThai.addActionListener(this);
 		cbPhuongXa.addItemListener(this);
 		cbTinhTP.addItemListener(this);
 		cbQuanHuyen.addItemListener(this);
@@ -345,8 +339,8 @@ public class DialogSuaNhanVien extends JDialog implements ActionListener, ItemLi
 		cbTinhTP.setSelectedItem(nhanVien.getDiaChi().getTinhTP());
 		cbQuanHuyen.setSelectedItem(nhanVien.getDiaChi().getQuanHuyen());
 		cbPhuongXa.setSelectedItem(nhanVien.getDiaChi().getPhuongXa());
-		
-		cbGioiTinh.setSelectedItem(nhanVien.isGioiTinh()? "Nam" : "Nữ");
+		cbtrangThai.setSelectedItem(nhanVien.isTrangThaiLamViec() ? "Đang làm" : "Nghĩ việc");
+		cbGioiTinh.setSelectedItem(nhanVien.isGioiTinh() ? "Nam" : "Nữ");
 	}
 
 	public boolean suaNhanVien() {
@@ -359,6 +353,7 @@ public class DialogSuaNhanVien extends JDialog implements ActionListener, ItemLi
 		String quanHuyen = cbQuanHuyen.getSelectedItem().toString();
 		String phuongXa = cbPhuongXa.getSelectedItem().toString();
 		
+
 		if (hoTen.trim().equals("")) {
 			JOptionPane.showMessageDialog(this, "Tên không được trống");
 			textHoTen.selectAll();
@@ -380,13 +375,13 @@ public class DialogSuaNhanVien extends JDialog implements ActionListener, ItemLi
 			return false;
 		}
 		if (!sdt.matches("^0[1-9][0-9]{8}")) {
-			JOptionPane.showMessageDialog(this, "Số điện thoại là dãy s!");
+			JOptionPane.showMessageDialog(this, "Số điện thoại là dãy số gồm 10 số s!");
 			txtSDT.selectAll();
 			txtSDT.requestFocus();
 
 			return false;
 		}
-		
+
 		if (cMND.trim().length() == 0) {
 			JOptionPane.showMessageDialog(null, "Vui lòng nhập chứng minh nhân dân");
 			txtCMND.selectAll();
@@ -441,11 +436,15 @@ public class DialogSuaNhanVien extends JDialog implements ActionListener, ItemLi
 			JOptionPane.showMessageDialog(this, "Vui lòng chọn phường xã");
 			return false;
 		}
+		if (cbtrangThai.getSelectedIndex() == 0) {
+			JOptionPane.showMessageDialog(this, "Vui lòng chọn trạng thái");
+			return false;
+		}
 		Date ngay = ngaySinh.getDate();
 		NhanVien nv;
 		nv = nhanVienService.layNhanVienTheoMa(textMa.getText().toString().trim());
-		NhanVien nhanVien = new NhanVien(nv.getMaNV(), isgioiTinh(), hoTen, ngay, mk, cMND, sdt,
-				isTrangThai(), chiService.layDiaChi(phuongXa, quanHuyen, tinhTP));
+		NhanVien nhanVien = new NhanVien(nv.getMaNV(), isgioiTinh(), hoTen, ngay, mk, cMND, sdt, isTrangThai(),
+				chiService.layDiaChi(phuongXa, quanHuyen, tinhTP));
 		boolean k = nhanVienService.suaThongTinNhanVien(nhanVien);
 		System.out.println(nhanVien);
 		System.out.println(k);
@@ -453,10 +452,10 @@ public class DialogSuaNhanVien extends JDialog implements ActionListener, ItemLi
 	}
 
 	public boolean isTrangThai() {
-		if (cbGioiTinh.getSelectedIndex() == 1) {
+		if (cbtrangThai.getSelectedIndex() == 1) {
 			return true;
 		}
-		if (cbGioiTinh.getSelectedIndex() == 2) {
+		if (cbtrangThai.getSelectedIndex() == 2) {
 			return false;
 		}
 		return false;
@@ -503,7 +502,6 @@ public class DialogSuaNhanVien extends JDialog implements ActionListener, ItemLi
 	}
 
 	public void keyPressed(KeyEvent e) {
-		
 
 	}
 
@@ -522,7 +520,7 @@ public class DialogSuaNhanVien extends JDialog implements ActionListener, ItemLi
 		} else if (object.equals(btnHuy)) {
 			dispose();
 
-		} else if(object.equals(btnKhoiPhuc)) {
+		} else if (object.equals(btnKhoiPhuc)) {
 			loadDuLieu(nhanVien);
 			JOptionPane.showMessageDialog(this, "Dữ liệu đã được khôi phục!");
 		}

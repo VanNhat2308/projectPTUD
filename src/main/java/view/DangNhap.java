@@ -74,7 +74,7 @@ public class DangNhap extends JFrame implements ActionListener, ItemListener {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setResizable(false);
-
+		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 204, 204));
 		panel.setBounds(0, 0, 658, 74);
@@ -176,7 +176,7 @@ public class DangNhap extends JFrame implements ActionListener, ItemListener {
 			if (txtMaQuanLy.getText().length() == 10) {
 				NhanVien quanLy = dangNhap_Dao.getNhanVienDangNhap(txtMaQuanLy.getText());
 				System.out.println(quanLy);
-				if (quanLy != null && txtMatKhau.getText().equals(quanLy.getPassword().strip())) {
+				if (quanLy != null && txtMatKhau.getText().equals(quanLy.getPassword())) {
 					if (quanLy.isTrangThaiLamViec()) {
 						setVisible(false);
 						new MainFrame(quanLy).setVisible(true);

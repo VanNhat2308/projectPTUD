@@ -29,7 +29,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.LayoutStyle.ComponentPlacement;
+
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -59,6 +59,7 @@ public class NhanVienPanel extends JPanel implements ActionListener, KeyListener
 	private static final long serialVersionUID = 1L;
 	@SuppressWarnings("unused")
 	private JPanel panel;
+	private List<NhanVien> nhanVien;
 	@SuppressWarnings("rawtypes")
 	private JComboBox cbTrangThaiLamViec;
 	private DefaultTableModel tableModle;
@@ -146,7 +147,7 @@ public class NhanVienPanel extends JPanel implements ActionListener, KeyListener
 		btnSua.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
 		btnTrangThaiLamViec = new JButton("Nghỉ việc");
-		btnTrangThaiLamViec.setBounds(819, 61, 140, 40);
+		btnTrangThaiLamViec.setBounds(1119, 60, 140, 40);
 
 		btnTrangThaiLamViec.setMargin(new Insets(2, 0, 2, 0));
 		btnTrangThaiLamViec.setHorizontalTextPosition(SwingConstants.RIGHT);
@@ -157,7 +158,7 @@ public class NhanVienPanel extends JPanel implements ActionListener, KeyListener
 		btnTrangThaiLamViec.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
 		btnThem = new JButton("Thêm");
-		btnThem.setBounds(669, 61, 140, 40);
+		btnThem.setBounds(819, 62, 140, 40);
 		btnThem.setMargin(new Insets(2, 9, 2, 9));
 		btnThem.setForeground(new Color(255, 255, 255));
 		btnThem.setIconTextGap(20);
@@ -167,7 +168,7 @@ public class NhanVienPanel extends JPanel implements ActionListener, KeyListener
 		
 
 		btnTim = new JButton("Tìm");
-		btnTim.setBounds(669, 111, 140, 40);
+		btnTim.setBounds(819, 110, 140, 40);
 		btnTim.setIconTextGap(30);
 		btnTim.setIcon(new ImageIcon(NhanVienPanel.class.getResource("/icon/search.png")));
 		btnTim.setBackground(new Color(60, 179, 113));
@@ -176,7 +177,7 @@ public class NhanVienPanel extends JPanel implements ActionListener, KeyListener
 		
 
 		cbTrangThaiLamViec = new JComboBox();
-		cbTrangThaiLamViec.setBounds(819, 111, 140, 40);
+		cbTrangThaiLamViec.setBounds(669, 111, 140, 40);
 		cbTrangThaiLamViec.setBackground(new Color(255, 248, 220));
 		cbTrangThaiLamViec.setModel(new DefaultComboBoxModel(new String[] { "Trạng Thái", "Đang làm", "Nghỉ việc" }));
 		cbTrangThaiLamViec.setToolTipText("");
@@ -193,7 +194,7 @@ public class NhanVienPanel extends JPanel implements ActionListener, KeyListener
 		tableModle = new DefaultTableModel(new Object[][] {
 
 		}, new String[] { "Mã NV", "Họ tên", "Số CMND", "SĐT", "Giới tính", "Ngày sinh", "Địa chỉ",
-				"Trạng thái làm việc" });
+				"Trạng thái làm việc","Password" });
 		table.addMouseListener(this);
 		table.setRowHeight(50);
 		scrollPane.setViewportView(table);
@@ -209,7 +210,8 @@ public class NhanVienPanel extends JPanel implements ActionListener, KeyListener
 		table.getColumnModel().getColumn(4).setPreferredWidth(90);
 		table.getColumnModel().getColumn(5).setPreferredWidth(110);
 		table.getColumnModel().getColumn(6).setPreferredWidth(200);
-		table.getColumnModel().getColumn(7).setPreferredWidth(250);
+		table.getColumnModel().getColumn(7).setPreferredWidth(150);
+		table.getColumnModel().getColumn(8).setPreferredWidth(150);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
 
 		JLabel lblTn = new JLabel("Tên: ");
@@ -242,7 +244,7 @@ public class NhanVienPanel extends JPanel implements ActionListener, KeyListener
 		lblNewLabel.setBackground(new Color(72, 209, 204));
 
 		btnLamMoi = new JButton("làm mới");
-		btnLamMoi.setBounds(1119, 61, 140, 40);
+		btnLamMoi.setBounds(969, 110, 140, 40);
 		btnLamMoi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -255,7 +257,7 @@ public class NhanVienPanel extends JPanel implements ActionListener, KeyListener
 		btnLamMoi.setBackground(new Color(50, 205, 50));
 
 		cbGioiTinh = new JComboBox();
-		cbGioiTinh.setBounds(969, 111, 140, 40);
+		cbGioiTinh.setBounds(669, 60, 140, 40);
 		cbGioiTinh.setModel(new DefaultComboBoxModel(new String[] { "Giới tính", "Nam", "Nữ" }));
 		cbGioiTinh.setToolTipText("");
 		cbGioiTinh.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -287,8 +289,10 @@ public class NhanVienPanel extends JPanel implements ActionListener, KeyListener
 		cbTrangThaiLamViec.addActionListener(this);
 		cbGioiTinh.addActionListener(this);
 		txtTimTen.addKeyListener(this);
+		txtSDT.addKeyListener(this);
+		txtCMND.addKeyListener(this);
 		table.addMouseListener(this);
-		cbTrangThaiLamViec.setSelectedIndex(1);
+		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -384,7 +388,7 @@ public class NhanVienPanel extends JPanel implements ActionListener, KeyListener
 							nhanVien.getNgaySinh().toString(),
 							nhanVien.getDiaChi().getTinhTP() + " " + nhanVien.getDiaChi().getQuanHuyen() + " "
 									+ nhanVien.getDiaChi().getPhuongXa(),
-							nhanVien.isTrangThaiLamViec() ? "Đang làm" : "Đã nghĩ" };
+							nhanVien.isTrangThaiLamViec() ? "Đang làm" : "Đã nghĩ",nhanVien.getPassword()};
 					tableModle.addRow(s);
 				}
 			}
@@ -399,15 +403,15 @@ public class NhanVienPanel extends JPanel implements ActionListener, KeyListener
 			trangThaiLamViec = cbTrangThaiLamViec.getSelectedItem().toString().equalsIgnoreCase("Đang làm") ? "1" : "0";
 		}
 
-		
-
+	
 		if (cbGioiTinh.getSelectedIndex() != 0) {
 			gioiTinh = cbGioiTinh.getSelectedItem().toString().equalsIgnoreCase("Nam") ? "1" : "0";
 		}
-
+		System.out.println(trangThaiLamViec);
+		System.out.println(gioiTinh);
 		List<NhanVien> list = null;
 		try {
-			list = nhanVienService.DanhSachNhanVien();
+			list = nhanVienService.layDanhSachNhanVien();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -419,13 +423,14 @@ public class NhanVienPanel extends JPanel implements ActionListener, KeyListener
 		
 			return;
 		}
+		nhanVien = nhanVienService.layDanhSachNhanVien();
 		xoaToanBoBang();
 		for (NhanVien nhanVien : list) {
 			String[] s = { nhanVien.getMaNV(), nhanVien.getHoTen().toUpperCase(), nhanVien.getSoCMND(),
 					nhanVien.getSoDienThoai(), nhanVien.isGioiTinh() ? "Nam" : "Nữ", nhanVien.getNgaySinh().toString(),
 					nhanVien.getDiaChi().getTinhTP() + " " + nhanVien.getDiaChi().getQuanHuyen() + " "
 							+ nhanVien.getDiaChi().getPhuongXa(),
-					nhanVien.isTrangThaiLamViec() ? "Đang làm" : "Đã nghĩ" };
+					nhanVien.isTrangThaiLamViec() ? "Đang làm" : "Đã nghĩ" ,nhanVien.getPassword() };
 			tableModle.addRow(s);
 		}
 
@@ -446,7 +451,9 @@ public class NhanVienPanel extends JPanel implements ActionListener, KeyListener
 //		btnTrangThaiLamViec = new JButton("TTLV");
 		cbTrangThaiLamViec.setSelectedIndex(0);
 		cbGioiTinh.setSelectedIndex(0);
+		txtTimTen.setText("");
 		txtSDT.setText("");
+//		txtCMND.setText("");
 		xoaToanBoBang();
 		themDuLieuVaoTable();
 		txtSDT.setEnabled(true);
@@ -488,7 +495,7 @@ public class NhanVienPanel extends JPanel implements ActionListener, KeyListener
 				}
 				if (nhanVien != null) {
 					xoaToanBoBang();
-					txtCMND.setEnabled(false);
+					txtCMND.setEnabled(true);
 					txtSDT.setEnabled(true);
 					txtTimTen.setText("");
 					String[] s = { nhanVien.getMaNV(), nhanVien.getHoTen().toUpperCase(), nhanVien.getSoCMND(),
@@ -496,7 +503,7 @@ public class NhanVienPanel extends JPanel implements ActionListener, KeyListener
 							nhanVien.getNgaySinh().toString(),
 							nhanVien.getDiaChi().getTinhTP() + " " + nhanVien.getDiaChi().getQuanHuyen() + " "
 									+ nhanVien.getDiaChi().getPhuongXa(),
-							nhanVien.isTrangThaiLamViec() ? "Đang làm" : "Đã nghĩ",
+							nhanVien.isTrangThaiLamViec() ? "Đang làm" : "Đã nghĩ",nhanVien.getPassword()
 							 };
 					tableModle.addRow(s);
 
@@ -513,7 +520,7 @@ public class NhanVienPanel extends JPanel implements ActionListener, KeyListener
 				}
 				if (nhanVien != null) {
 					xoaToanBoBang();
-					txtSDT.setEnabled(false);
+					txtSDT.setEnabled(true);
 					txtCMND.setEnabled(true);
 					txtSDT.setText("");
 					String[] s = { nhanVien.getMaNV(), nhanVien.getHoTen().toUpperCase(), nhanVien.getSoCMND(),
@@ -521,7 +528,7 @@ public class NhanVienPanel extends JPanel implements ActionListener, KeyListener
 							nhanVien.getNgaySinh().toString(),
 							nhanVien.getDiaChi().getTinhTP() + " " + nhanVien.getDiaChi().getQuanHuyen() + " "
 									+ nhanVien.getDiaChi().getPhuongXa(),
-							nhanVien.isTrangThaiLamViec() ? "Đang làm" : "Đã nghĩ",
+							nhanVien.isTrangThaiLamViec() ? "Đang làm" : "Đã nghĩ",nhanVien.getPassword()
 							 };
 					tableModle.addRow(s);
 
