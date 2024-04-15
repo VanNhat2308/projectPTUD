@@ -24,11 +24,10 @@ public class HoaDonDao {
 	}
 
 	@SuppressWarnings("deprecation")
-	public List<HoaDon> layDanhSachHoaDon(String maHD, String tenKH, String sdtKH, Date ngayLapHD, Date filterThoiGian,
-			int page, int limit, String maNhanVien) {
+	public List<HoaDon> layDanhSachHoaDon(String maHD, String tenKH, String sdtKH, Date ngayLapHD, Date filterThoiGian, String maNhanVien) {
 		Session session = sessionFactory.openSession();
 		Transaction tr = session.getTransaction();
-		String sql = " select * from HoaDon join KhachHang on HoaDon.maKH =  KhachHang.maKH where trangThai = 1 ";
+		String sql = " select * from HoaDon join KhachHang on HoaDon.maKH =  KhachHang.maKH where trangThai = 0 ";
 
 		if (maHD != null && !maHD.equals("")) {
 			sql += " and maHD = '" + maHD + "' ";
@@ -47,17 +46,14 @@ public class HoaDonDao {
 			sql += " and ngayLap >=  " + String.format("'%d-%02d-%02d'", filterThoiGian.getYear() + 1900,
 					filterThoiGian.getMonth() + 1, filterThoiGian.getDate());
 		}
-		if (limit <= 0) {
-			limit = 20;
-		}
+		
 		if (maNhanVien != null && !maNhanVien.equals("")) {
 			sql += " and maNV = '" + maNhanVien + "'";
 		}
 
-		int offset = page * limit;// lay du lieu bat dau tu vi tri page*20
 		try {
 			tr.begin();
-			sql += " order by maHD desc " + " OFFSET " + offset + " ROWS FETCH NEXT 20 ROWS ONLY";
+			sql += " order by maHD desc";
 			System.out.println(sql);
 			List<HoaDon> dsHoaDon = session.createNativeQuery(sql, HoaDon.class).getResultList();
 			tr.commit();

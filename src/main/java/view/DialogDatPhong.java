@@ -280,16 +280,18 @@ public class DialogDatPhong extends JDialog implements ActionListener, KeyListen
 					Date now = new Date();
 					JOptionPane.showMessageDialog(this, "Vui lòng thông báo cho khách TRẢ PHÒNG trước "
 							+ FormatCustom.dinhDanhThoiGian(phieuDatPhong.getNgayNhanPhong()));
-					phong.setTrangThaiPhong("pc005");
+					phong.setTrangThaiPhong("TTP001");
 					phongDao.capNhatTrangThaiPhong(phong.getMaPhong(), MainFrame.maPhongTam);
 				} else {
-					phong.setTrangThaiPhong("pc009");
+					phong.setTrangThaiPhong("TTP001");
 					System.out.println(phong.getTrangThaiPhong());
 					phongDao.capNhatTrangThaiPhong(phong.getMaPhong(), MainFrame.maPhongBan);
 				}
 
 				hoaDon = new HoaDon(MainFrame.nhanVien, MainFrame.khuyenMaiMacDinh, khachHang);
+				System.out.println(hoaDon.getMaHD());
 				hoaDon.setChiTietHoaDon(Arrays.asList(new ChiTietHoaDon(phong, hoaDon, 0)));
+				System.out.println(hoaDon.getChiTietHoaDon());
 				if (hoaDonDao.themHoaDon(hoaDon)) {
 					System.out.println("add Bill success");
 					setVisible(false);

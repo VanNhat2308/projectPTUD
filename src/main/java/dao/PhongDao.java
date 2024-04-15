@@ -41,7 +41,7 @@ public class PhongDao implements PhongService{
 	public List<Phong> layDanhSachPhongDuocPhepDat() {
 		Session session = sessionFactory.openSession();
 		Transaction tr = session.getTransaction();
-		String sql = "select * from Phong where TrangThaiPhong = 'TTP003'";
+		String sql = "select * from Phong where TrangThaiPhong = 'TTP003' or TrangThaiPhong = 'TTP002'";
 		try {
 			tr.begin();
 			List<Phong> dsPhong = session.createNativeQuery(sql, Phong.class).getResultList();
@@ -136,6 +136,7 @@ public class PhongDao implements PhongService{
 		}
 		String sql = "SELECT * FROM Phong where "+ttp+"  maLP like '%" + lp
 				+ "%' and soNguoi like '%" + sn + "%'";
+		System.out.println(sql);
 		Session session = sessionFactory.openSession();
 		Transaction tr = session.getTransaction();
 		try {

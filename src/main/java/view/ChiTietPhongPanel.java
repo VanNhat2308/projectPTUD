@@ -28,6 +28,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
@@ -481,18 +482,6 @@ public class ChiTietPhongPanel extends JPanel implements ActionListener, MouseLi
 			}
 		};
 
-//		DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
-//		rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
-//		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-//		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-//		
-//		table.getColumnModel().getColumn(0).setPreferredWidth(80);
-//		table.getColumnModel().getColumn(1).setPreferredWidth(150);
-//		table.getColumnModel().getColumn(2).setPreferredWidth(80);
-//		table.getColumnModel().getColumn(2).setCellRenderer(rightRenderer);
-//		table.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
-//		table.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
-//		table.getColumnModel().getColumn(5).setCellRenderer(rightRenderer);
 
 		tableDichVu.setRowHeight(40);
 
@@ -1002,6 +991,7 @@ public class ChiTietPhongPanel extends JPanel implements ActionListener, MouseLi
 		hoaDon = null;
 		tfMaGiamGia.setText("");
 		phong = phongDao.layThongTinPhongQuaMa(maPhong);
+		System.out.println(phong);
 		lbSoPhong.setText(phong.getMaPhong().substring(1));
 		lbTrangThaiPhong.setText(phong.getTrangThaiPhong());
 		lbLoaiPhong.setText(phong.getLoaiPhong().getTenLoaiPhong());
@@ -1153,14 +1143,12 @@ public class ChiTietPhongPanel extends JPanel implements ActionListener, MouseLi
 		lblTongCong.setText(FormatCustom.chuyenDoiTienTe(tienPhong + tienDichVu));
 		lblTienPhong.setText(FormatCustom.chuyenDoiTienTe(tienPhong));
 
-		if (hoaDon.getKhachHang() != null
-				&& !hoaDon.getKhachHang().getMaKH().equals(MainFrame.khachHangMacDinh.getMaKH())) {
+		if (hoaDon.getKhachHang() != null) {
 			lblSDTKhach.setText(hoaDon.getKhachHang().getSoDienThoai());
 			lblTenKhach.setText(hoaDon.getKhachHang().getHoTen());
 		}
 
-		if (hoaDon.getKhuyenMai() != null
-				&& !hoaDon.getKhuyenMai().getMaKM().equals((MainFrame.khuyenMaiMacDinh.getMaKM()))) {
+		if (hoaDon.getKhuyenMai() != null) {
 			tfMaGiamGia.setText(hoaDon.getKhuyenMai().getMaKM());
 			lblIconMaGiamGia.setIcon(new ImageIcon(ChiTietPhongPanel.class.getResource("/icon/true.png")));
 			lblChietKhau.setText(hoaDon.getKhuyenMai().getChietKhau() + "%");
@@ -1390,7 +1378,7 @@ public class ChiTietPhongPanel extends JPanel implements ActionListener, MouseLi
 				System.out.println("add Bill fail");
 			}
 
-			phong.setTrangThaiPhong("pc324");
+			phong.setTrangThaiPhong("TTP001");
 			caiDatTrangThaiPhong(MainFrame.maPhongBan);
 
 		}

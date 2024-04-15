@@ -53,11 +53,6 @@ public class HoaDonPanel extends JPanel implements ActionListener, KeyListener, 
 	private JComboBox<String> cbThoiGian;
 	private JButton btnChiTiet;
 	private JButton btnLamMoi;
-	private JButton btnDau;
-	private JButton btntru1;
-	private JLabel lblPage;
-	private JButton btnCong1;
-	private JButton btnCuoi;
 //	private HoaDonDao hoaDonDao = null;
 //	private List<HoaDon> dsHoaDon;
 	private int limit = 20;
@@ -67,11 +62,10 @@ public class HoaDonPanel extends JPanel implements ActionListener, KeyListener, 
 	private JTextField tfSDTKhach;
 	private JButton btnTimKiem;
 	private HoaDonDao hoaDonDao;
-	private JLabel lblTongTrang;
 	private int tongTrang;
 	private DialogChiTietHoaDon dialogChiTietHoaDon;
 	private List<HoaDon> dsHoaDon;
-	private String maNhanVien = "NV001";
+	private String maNhanVien = MainFrame.nhanVien.getMaNV();
 	private Date date = new Date();
 	private boolean isChangeDateChoise = false;
 
@@ -99,21 +93,9 @@ public class HoaDonPanel extends JPanel implements ActionListener, KeyListener, 
 
 		table = new JTable();
 		scrollPane.setViewportView(table);
-		table.setRowHeight(35);
+table.setRowHeight(35);
 		table.setModel(tableModel = new DefaultTableModel(new Object[][] {}, new String[] { "Mã hóa đơn", "Ngày lập",
 				"Tên khách hàng", "SĐT Khách", "Nhân viên", "Chiết khấu", "Tổng tiền" }));
-
-		btnDau = new JButton("");
-		btnDau.setIcon(new ImageIcon(HoaDonPanel.class.getResource("/icon/previousEnd.png")));
-		btnDau.setFont(new Font("Arial", Font.PLAIN, 16));
-
-		btntru1 = new JButton("");
-		btntru1.setIcon(new ImageIcon(HoaDonPanel.class.getResource("/icon/rewind-button.png")));
-		btntru1.setFont(new Font("Arial", Font.PLAIN, 16));
-
-		btnCong1 = new JButton("");
-		btnCong1.setIcon(new ImageIcon(HoaDonPanel.class.getResource("/icon/forward-button.png")));
-		btnCong1.setFont(new Font("Arial", Font.PLAIN, 16));
 
 		tfTenKhach = new JTextField();
 		tfTenKhach.setColumns(10);
@@ -122,15 +104,6 @@ public class HoaDonPanel extends JPanel implements ActionListener, KeyListener, 
 		btnLamMoi.setBackground(SystemColor.menu);
 		btnLamMoi.setIcon(new ImageIcon(HoaDonPanel.class.getResource("/icon/lam_moi.png")));
 		btnLamMoi.setFont(new Font("Arial", Font.PLAIN, 16));
-
-		btnCuoi = new JButton("");
-		btnCuoi.setIcon(new ImageIcon(HoaDonPanel.class.getResource("/icon/nextEnd.png")));
-		btnCuoi.setFont(new Font("Arial", Font.PLAIN, 16));
-
-		lblPage = new JLabel("1");
-		lblPage.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblPage.setForeground(new Color(0, 0, 0));
-		lblPage.setFont(new Font("Tahoma", Font.BOLD, 16));
 
 		JLabel lblSdtKh = new JLabel("SĐT khách:");
 		lblSdtKh.setForeground(Color.BLACK);
@@ -193,7 +166,7 @@ public class HoaDonPanel extends JPanel implements ActionListener, KeyListener, 
 				GroupLayout.DEFAULT_SIZE, 1271, Short.MAX_VALUE));
 		gl_panel_2.setVerticalGroup(gl_panel_2.createParallelGroup(Alignment.LEADING).addComponent(lblNewLabel_11,
 				GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE));
-		panel_2.setLayout(gl_panel_2);
+panel_2.setLayout(gl_panel_2);
 
 		JLabel lblNewLabel_1_2 = new JLabel("Mã hóa đơn:");
 		lblNewLabel_1_2.setForeground(Color.BLACK);
@@ -209,91 +182,91 @@ public class HoaDonPanel extends JPanel implements ActionListener, KeyListener, 
 		btnTimKiem.setForeground(SystemColor.desktop);
 		btnTimKiem.setFont(new Font("Arial", Font.PLAIN, 16));
 		btnTimKiem.setBackground(SystemColor.window);
-
-		lblTongTrang = new JLabel("/1");
-		lblTongTrang.setHorizontalAlignment(SwingConstants.LEFT);
-		lblTongTrang.setForeground(Color.BLACK);
-		lblTongTrang.setFont(new Font("Tahoma", Font.BOLD, 16));
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(Alignment.TRAILING).addGroup(gl_panel
-				.createSequentialGroup().addGap(10)
-				.addComponent(lblNewLabel_1_2, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE).addGap(10)
-				.addComponent(tfMaHoaDon, GroupLayout.DEFAULT_SIZE, 673, Short.MAX_VALUE).addGap(10)
-				.addComponent(btnTimKiem, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE).addGap(10)
-				.addComponent(btnChiTiet, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE).addGap(15)
-				.addComponent(btnLamMoi, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE).addGap(15))
-				.addGroup(gl_panel.createSequentialGroup().addGap(10)
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 1255, Short.MAX_VALUE).addGap(26))
-				.addGroup(gl_panel.createSequentialGroup().addGap(425)
-						.addComponent(btnDau, GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE).addGap(15)
-						.addComponent(btntru1, GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
-						.addComponent(lblPage, GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE).addGap(1)
-						.addComponent(lblTongTrang, GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE).addGap(18)
-						.addComponent(btnCong1, GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE).addGap(15)
-						.addComponent(btnCuoi, GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE).addGap(417))
-				.addGroup(gl_panel.createSequentialGroup().addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(10)
+					.addComponent(lblNewLabel_1_2, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(tfMaHoaDon, GroupLayout.DEFAULT_SIZE, 673, Short.MAX_VALUE)
+					.addGap(10)
+					.addComponent(btnTimKiem, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(btnChiTiet, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE)
+					.addGap(15)
+					.addComponent(btnLamMoi, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE)
+					.addGap(15))
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(10)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 1255, Short.MAX_VALUE)
+					.addGap(26))
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
 						.addComponent(panel_2, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 1271, Short.MAX_VALUE)
-						.addGroup(gl_panel.createSequentialGroup().addGap(10)
-								.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)
-								.addGap(10).addComponent(tfTenKhach, GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
-								.addGap(45)
-								.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-										.addComponent(lblSdtKh, GroupLayout.PREFERRED_SIZE, 110,
-												GroupLayout.PREFERRED_SIZE)
-										.addGroup(gl_panel.createSequentialGroup().addGap(108).addComponent(tfSDTKhach,
-												GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)))
-								.addGap(10)
-								.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
-								.addGap(9)
-								.addComponent(cbThoiGian, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)
-								.addGap(11)
-								.addComponent(lblNewLabel_1_1, GroupLayout.PREFERRED_SIZE, 80,
-										GroupLayout.PREFERRED_SIZE)
-								.addGap(2).addComponent(dateChooser_NgayLap, GroupLayout.PREFERRED_SIZE, 140,
-										GroupLayout.PREFERRED_SIZE)))
-						.addGap(20)));
-		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(Alignment.LEADING).addGroup(gl_panel
-				.createSequentialGroup().addGap(1)
-				.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE).addGap(36)
-				.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(10)
+							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)
+							.addGap(10)
+							.addComponent(tfTenKhach, GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+							.addGap(45)
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblSdtKh, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)
+								.addGroup(gl_panel.createSequentialGroup()
+									.addGap(108)
+									.addComponent(tfSDTKhach, GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)))
+							.addGap(10)
+							.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+							.addGap(9)
+							.addComponent(cbThoiGian, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)
+							.addGap(11)
+							.addComponent(lblNewLabel_1_1, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+							.addGap(2)
+							.addComponent(dateChooser_NgayLap, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)))
+					.addGap(20))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(1)
+.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+					.addGap(36)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_panel.createSequentialGroup().addGap(2).addComponent(tfTenKhach,
-								GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(2)
+							.addComponent(tfTenKhach, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
 						.addComponent(lblSdtKh, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_panel.createSequentialGroup().addGap(2).addComponent(tfSDTKhach,
-								GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup().addGap(1).addComponent(lblNewLabel_1,
-								GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup().addGap(3).addComponent(cbThoiGian,
-								GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(2)
+							.addComponent(tfSDTKhach, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(1)
+							.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(3)
+							.addComponent(cbThoiGian, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
 						.addComponent(lblNewLabel_1_1, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_panel.createSequentialGroup().addGap(1).addComponent(dateChooser_NgayLap,
-								GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)))
-				.addGap(8)
-				.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup().addGap(1).addComponent(lblNewLabel_1_2,
-								GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup().addGap(1).addComponent(tfMaHoaDon,
-								GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup().addGap(1).addComponent(btnTimKiem,
-								GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(1)
+							.addComponent(dateChooser_NgayLap, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)))
+					.addGap(8)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(1)
+							.addComponent(lblNewLabel_1_2, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(1)
+							.addComponent(tfMaHoaDon, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(1)
+							.addComponent(btnTimKiem, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
 						.addComponent(btnChiTiet, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnLamMoi, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
-				.addGap(13).addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE).addGap(7)
-				.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup().addGap(3).addComponent(btnDau,
-								GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup().addGap(3).addComponent(btntru1,
-								GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup().addGap(3).addComponent(lblPage,
-								GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup().addGap(3).addComponent(lblTongTrang,
-								GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup().addGap(3).addComponent(btnCong1,
-								GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup().addGap(3).addComponent(btnCuoi,
-								GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)))
-				.addGap(2)));
+					.addGap(13)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
+					.addGap(42))
+		);
 		panel.setLayout(gl_panel);
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addComponent(panel,
@@ -309,16 +282,11 @@ public class HoaDonPanel extends JPanel implements ActionListener, KeyListener, 
 		btnChiTiet.addActionListener(this);
 		btnLamMoi.addActionListener(this);
 		btnTimKiem.addActionListener(this);
-
-		btnCong1.addActionListener(this);
-		btnDau.addActionListener(this);
-		btntru1.addActionListener(this);
-		btnCuoi.addActionListener(this);
 		tfSDTKhach.addKeyListener(this);
 
 		table.addMouseListener(this);
 		// khong cho sua table
-		table.setDefaultEditor(Object.class, null);
+table.setDefaultEditor(Object.class, null);
 		dialogChiTietHoaDon = new DialogChiTietHoaDon();
 
 	}
@@ -350,8 +318,7 @@ public class HoaDonPanel extends JPanel implements ActionListener, KeyListener, 
 			ngayLapHD = date;
 		}
 
-		dsHoaDon = hoaDonDao.layDanhSachHoaDon(maHD, tenKH, sdtKhach, ngayLapHD, FilterThoiGian,
-				Integer.parseInt(lblPage.getText()) - 1, limit, maNhanVien);
+		dsHoaDon = hoaDonDao.layDanhSachHoaDon(maHD, tenKH, sdtKhach, ngayLapHD, FilterThoiGian, maNhanVien);
 		tongTrang = hoaDonDao.layTongTrang(maHD, tenKH, sdtKhach, ngayLapHD, FilterThoiGian, limit, maNhanVien);
 		xoaTatCaHang();
 		date = null;
@@ -368,7 +335,6 @@ public class HoaDonPanel extends JPanel implements ActionListener, KeyListener, 
 					FormatCustom.chuyenDoiTienTe(e.getTongTien()) });
 		});
 
-		lblTongTrang.setText("/" + tongTrang);
 	}
 
 	public void khoiTaoDuLieu() {
@@ -386,61 +352,21 @@ public class HoaDonPanel extends JPanel implements ActionListener, KeyListener, 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object object = e.getSource();
-		if (object.equals(btnDau)) {
-			int page = Integer.parseInt(lblPage.getText());
-			if (page == 1) {
-				return;
-			}
-			lblPage.setText(Integer.toString(1));
-			themDuLieuVaoBang(null);
-			return;
-		}
-		if (object.equals(btntru1)) {
-
-			int page = Integer.parseInt(lblPage.getText());
-			if (page == 1) {
-				return;
-			}
-			lblPage.setText(Integer.toString(page - 1));
-
-			themDuLieuVaoBang(null);
-			return;
-		}
-		if (object.equals(btnCong1)) {
-			int page = Integer.parseInt(lblPage.getText());
-			if (page == tongTrang) {
-				return;
-			}
-			lblPage.setText(Integer.toString(page + 1));
-			themDuLieuVaoBang(null);
-			return;
-		}
-		if (object.equals(btnCuoi)) {
-			int page = Integer.parseInt(lblPage.getText());
-			if (page == tongTrang) {
-				return;
-			}
-			lblPage.setText(Integer.toString(tongTrang));
-			themDuLieuVaoBang(null);
-			return;
-		}
+		
 		if (object.equals(cbThoiGian)) {
-			lblPage.setText("1");
 			themDuLieuVaoBang(null);
 			if (!isChangeDateChoise) {
-				dateChooser_NgayLap.setDate(null);
+dateChooser_NgayLap.setDate(null);
 				isChangeDateChoise = false;
 				System.out.println("vao");
 			}
 			return;
 		}
 		if (object.equals(btnTimKiem)) {
-			lblPage.setText("1");
 			themDuLieuVaoBang(null);
 			return;
 		}
 		if (object.equals(btnLamMoi)) {
-			lblPage.setText("1");
 			tfMaHoaDon.setText("");
 			tfSDTKhach.setText("");
 			tfTenKhach.setText("");
