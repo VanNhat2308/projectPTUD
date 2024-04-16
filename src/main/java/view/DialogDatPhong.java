@@ -192,6 +192,13 @@ public class DialogDatPhong extends JDialog implements ActionListener, KeyListen
 		tfSDTKhach.addKeyListener(this);
 
 	}
+	public String covertTrangThai(String TrangThaiPhong) {
+		if(TrangThaiPhong.equalsIgnoreCase("TTP001")) 
+			return "Phòng Bận";
+		else if(TrangThaiPhong.equalsIgnoreCase("TTP003")) 
+			return "Phòng Trống";
+		return "Phòng chờ";
+	}
 
 	@SuppressWarnings("deprecation")
 	public void khoiTao(Phong phong) {
@@ -204,7 +211,7 @@ public class DialogDatPhong extends JDialog implements ActionListener, KeyListen
 		lblSoNguoi.setText(phong.getSoNguoi() + " người");
 		lblGiaTien.setText(FormatCustom.chuyenDoiTienTe(phong.getLoaiPhong().getGiaTien()));
 		lblLoaiPhong.setText(phong.getLoaiPhong().getTenLoaiPhong());
-		lblTrangThaiPhong.setText(phong.getTrangThaiPhong());
+		lblTrangThaiPhong.setText(covertTrangThai(phong.getTrangThaiPhong().strip()));
 		lblIconKiemTraSDT.setIcon(new ImageIcon(ChiTietPhongPanel.class.getResource("/icon/check.png")));
 		if (phong.getTrangThaiPhong().equals(MainFrame.maPhongCho)) {
 			Date now = new Date();

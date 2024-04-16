@@ -169,13 +169,20 @@ public class DialogChuyenPhong extends JDialog implements ActionListener, MouseL
 
 		// Them Du Lieu
 		dsPhong.forEach(e -> {
-			tableModel.addRow(new String[] { e.getMaPhong().substring(1), e.getTrangThaiPhong(),
+			tableModel.addRow(new String[] { e.getMaPhong().substring(1),covertTrangThai(e.getTrangThaiPhong().strip()),
 					e.getLoaiPhong().getTenLoaiPhong(), Integer.toString(e.getSoNguoi()),
 					FormatCustom.chuyenDoiTienTe(e.getLoaiPhong().getGiaTien()) });
 		});
 
 	}
-
+	
+	public String covertTrangThai(String TrangThaiPhong) {
+		if(TrangThaiPhong.equalsIgnoreCase("TTP001")) 
+			return "Phòng Bận";
+		else if(TrangThaiPhong.equalsIgnoreCase("TTP003")) 
+			return "Phòng Trống";
+		return "Phòng chờ";
+	}
 	public void khoiTao(Phong phong) {
 		btnLamMoi.doClick();
 		tinhTrang = false;
@@ -201,9 +208,9 @@ public class DialogChuyenPhong extends JDialog implements ActionListener, MouseL
 			if (xacnhan != JOptionPane.YES_OPTION) {
 				return;
 			}
-			HoaDon hoaDon = hoaDonDao.layHoaDonMoiNhatTheoPhong(phong.getMaPhong());
+			HoaDon hoaDon = hoaDonDao.layHoaDonMoiNhatTheoPhong(phong.getMaPhong().strip());
 			@SuppressWarnings("unused")
-			int thoiLuongTong = hoaDon.capNhatThoiLuong(phong.getMaPhong());
+			int thoiLuongTong = hoaDon.capNhatThoiLuong(phong.getMaPhong().strip());
 
 			ChiTietHoaDon chiTietHoaDonChuyen = new ChiTietHoaDon(phongChuyen, hoaDon, 0);
 			ChiTietHoaDon chiTietHoaDonHienTai = null;
