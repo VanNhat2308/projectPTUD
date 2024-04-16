@@ -41,18 +41,28 @@ public class PhieuDatPhong implements Serializable {
 	public PhieuDatPhong() {
 
 	}
-	public PhieuDatPhong(String maPDP, KhachHang khachHang, NhanVien nhanVienLap, Phong phong, Date ngayDKDatPhong,
-			Date ngayNhanPhong, boolean tinhTrang, int soNguoi) {
+	public PhieuDatPhong(String maPDP, KhachHang khachHang, NhanVien nhanVienLap, Phong phong,
+			Date thoiGianDangKyDatPhong, Date thoiGianNhanPhong, boolean tinhTrang,int soNguoi) {
 		super();
 		this.maPDP = maPDP;
 		this.khachHang = khachHang;
 		this.nhanVienLap = nhanVienLap;
 		this.phong = phong;
-		this.ngayDKDatPhong = ngayDKDatPhong;
-		this.ngayNhanPhong = ngayNhanPhong;
+		this.ngayDKDatPhong = thoiGianDangKyDatPhong;
+		this.ngayNhanPhong = thoiGianNhanPhong;
 		this.tinhTrang = tinhTrang;
 		this.soNguoi = soNguoi;
 	}
+
+	public PhieuDatPhong(KhachHang khachHang, NhanVien nhanVienLap, Phong phong, Date thoiGianNhanPhong) {
+		super();
+		this.khachHang = khachHang;
+		this.nhanVienLap = nhanVienLap;
+		this.phong = phong;
+		this.ngayNhanPhong = thoiGianNhanPhong;
+		this.tinhTrang = true;
+	}
+
 	public String getMaPDP() {
 		return maPDP;
 	}

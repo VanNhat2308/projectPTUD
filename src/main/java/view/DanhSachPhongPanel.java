@@ -592,6 +592,7 @@ public class DanhSachPhongPanel extends JPanel implements ActionListener, ItemLi
 		} else {
 //			
 			list = phongDao.layDanhSachPhongTheoTrangThaiLoaiPhongSoNguoi(tt, lp, sn);
+			System.out.println(list);
 			
 		}
 		listHashMap = new HashMap<JPanel, Phong>();
@@ -609,10 +610,10 @@ public class DanhSachPhongPanel extends JPanel implements ActionListener, ItemLi
 						phieuDatPhongDao.huyPhieuDatPhong(phieuDatPhong.getMaPDP());
 						if (phong.getTrangThaiPhong().equals(MainFrame.maPhongCho)) {
 							phongDao.capNhatTrangThaiPhong(phong.getMaPhong(), MainFrame.maPhongTrong);
-							phong.setTrangThaiPhong( "pc005");
+							phong.setTrangThaiPhong( "TTP003");
 						} else {
 							phongDao.capNhatTrangThaiPhong(phong.getMaPhong(), MainFrame.maPhongBan);
-							phong.setTrangThaiPhong("pc006");
+							phong.setTrangThaiPhong("TTP001");
 						}
 					}
 				} catch (Exception e) {
@@ -655,6 +656,10 @@ public class DanhSachPhongPanel extends JPanel implements ActionListener, ItemLi
 		}
 
 	}
+	
+	
+	
+
 
 	public void lamMoi(String thongBao) {
 		disabledTheoDSPhong();
@@ -703,14 +708,14 @@ public class DanhSachPhongPanel extends JPanel implements ActionListener, ItemLi
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			String ma = String.format("P%03d", Integer.parseInt(sp));
-			loadGUIDanhSachPhong(ma, 0, 0, 0);
+			loadGUIDanhSachPhong(null, 1, 0, 0);
 		} else if (o == btnLamMoi) {
 			lamMoi("Vừa làm mới");
 		} else if (o == btnDangCho) {
-			int sn = cbSoNguoi.getSelectedIndex();
 			intLISTPHONG = 1;
-			loadGUIDanhSachPhong(null, intLISTPHONG, getRadio(), sn);
+			int sn = cbSoNguoi.getSelectedIndex();
+			System.out.println(sn);
+			loadGUIDanhSachPhong(null,intLISTPHONG,getRadio(),sn);
 		} else if (o == btnDangHat) {
 			int sn = cbSoNguoi.getSelectedIndex();
 			intLISTPHONG = 2;
@@ -723,10 +728,10 @@ public class DanhSachPhongPanel extends JPanel implements ActionListener, ItemLi
 		else if (objPhong != null) {
 			phong = listHashMap.get(objPhong);
 			if (o == btnDatPhongCho) {
-//				DialogDatPhongCho phieuDatPhongCho = new DialogDatPhongCho(phong);
-//				phieuDatPhongCho.setVisible(true);
-//				loadGUIDanhSachPhong(null, 1, 0, 0);
-//				lamMoi("Vừa đặt phòng chờ " + phong.getMaPhong().substring(1));
+				DialogDatPhongCho phieuDatPhongCho = new DialogDatPhongCho(phong);
+				phieuDatPhongCho.setVisible(true);
+				loadGUIDanhSachPhong(null, 1, 0, 0);
+				lamMoi("Vừa đặt phòng chờ " + phong.getMaPhong().substring(1));
 			} else if (o == btnNhanPhong) {
 				PhieuDatPhong phieuDatPhong = phieuDatPhongDao.layPhieuDatPhongMoiNhatTheoPhong(phong.getMaPhong());
 
