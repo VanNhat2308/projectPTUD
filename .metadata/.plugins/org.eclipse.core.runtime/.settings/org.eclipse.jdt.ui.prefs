@@ -1,0 +1,9 @@
+content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="java.awt.event.ActionListener"><rhs name\="view.ChiTietPhongDiaglog"/></lhs><lhs name\="java.util.EventListener"><rhs name\="view.ChiTietPhongDiaglog"/></lhs><lhs name\="javax.swing.JDialog"><rhs name\="view.ChiTietPhongDiaglog"/></lhs><lhs name\="javax.swing.WindowConstants"><rhs name\="view.ChiTietPhongDiaglog"/></lhs><lhs name\="javax.accessibility.Accessible"><rhs name\="view.ChiTietPhongDiaglog"/></lhs><lhs name\="javax.swing.RootPaneContainer"><rhs name\="view.ChiTietPhongDiaglog"/></lhs><lhs name\="javax.swing.TransferHandler$HasGetTransferHandler"><rhs name\="view.ChiTietPhongDiaglog"/></lhs><lhs name\="java.awt.Dialog"><rhs name\="view.ChiTietPhongDiaglog"/></lhs><lhs name\="java.awt.Window"><rhs name\="view.ChiTietPhongDiaglog"/></lhs><lhs name\="java.awt.Container"><rhs name\="view.ChiTietPhongDiaglog"/></lhs><lhs name\="java.awt.Component"><rhs name\="view.ChiTietPhongDiaglog"/></lhs><lhs name\="java.awt.image.ImageObserver"><rhs name\="view.ChiTietPhongDiaglog"/></lhs><lhs name\="java.awt.MenuContainer"><rhs name\="view.ChiTietPhongDiaglog"/></lhs><lhs name\="view.ChiTietPhongDiaglog"><rhs name\="view.ChiTietPhongDiaglog"/></lhs><lhs name\="service.PhongService"><rhs name\="dao.PhongDao"/></lhs><lhs name\="dao.PhongDao"><rhs name\="dao.PhongDao"/></lhs><lhs name\="entity.HoaDon"><rhs name\="entity.HoaDon"/></lhs></history>
+content_assist_number_of_computers=20
+eclipse.preferences.version=1
+markOccurrences=false
+org.eclipse.jdt.ui.formatterprofiles.version=23
+spelling_locale_initialized=true
+typefilter_migrated_2=true
+useAnnotationsPrefPage=true
+useQuickDiffPrefPage=true
